@@ -1,0 +1,15 @@
+{
+  "name": "robot2027-companion-v3-0-pro",
+  "version": "3.0.0",
+  "description": "Robot 2027 V3.0 Pro - Kiosk AI English Tutor, 8 Expressions, Voice User Switch, 4-Key ABCD Nav, ESP32/Phone-Sim BT & MOSFET, In-App Wi-Fi, Silent 24/7 P2P Camera",
+  "main": "www/index.html",
+  "scripts": {
+    "sync": "npx cap sync android"
+  },
+  "dependencies": {
+    "@capacitor-community/bluetooth-le": "^6.0.1",
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/cli": "^6.1.2",
+    "@capacitor/core": "^6.1.2"
+  }
+}

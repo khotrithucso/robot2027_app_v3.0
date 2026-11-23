@@ -1,0 +1,50 @@
+name: Build Robot2027 V3.0 Pro APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout ma nguon
+        uses: actions/checkout@v4
+
+      - name: 2. Thiet lap Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 3. Thiet lap Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: 4. Cai dat Capacitor Dependencies
+        run: |
+          npm install --legacy-peer-deps
+
+      - name: 5. Khoi tao du an Android Capacitor
+        run: |
+          npx cap add android
+
+      - name: 6. Tich hop Native Android Plugin & Cau hinh Kiosk / Quyen
+        run: |
+          python3 scripts/patch_android.py
+
+      - name: 7. Dong bo Web & Bien dich APK Debug V3.0 Pro
+        run: |
+          npx cap sync android
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: 8. Xuat file APK V3.0 Pro hoan chinh
+        uses: actions/upload-artifact@v4
+        with:
+          name: Robot2027-V3.0-Pro-Debug
+          path: android/app/build/outputs/apk/debug/app-debug.apk
